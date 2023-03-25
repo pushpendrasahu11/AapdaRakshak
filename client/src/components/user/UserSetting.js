@@ -1,10 +1,10 @@
 import React from 'react'
 
-function RaiseFundBox() {
+function UserSetting() {
   return (
     <div className='admin-box'>
     <div className='top-bar'>
-    <h5 style={{fontSize:'1.2rem',padding:'0.6rem 0 0 1rem',fontWeight:'400'}}>Review Raising Funds requests</h5>
+    <h5 style={{fontSize:'1.2rem',padding:'0.6rem 0 0 1rem',fontWeight:'400'}}>Settings</h5>
   </div>
 
   <div className='main-box'>
@@ -13,8 +13,9 @@ function RaiseFundBox() {
 
       <div className='box-child'>
       <div className='left-child'>
-        <h3>Name of Victim/Organization</h3>
-        <h3>Amount Required</h3>
+        <h3>Title of the disaster</h3>
+        <h3>Type</h3>
+        <h3>Location</h3>
       </div>
       <div className='right-child'>
         <h3>username</h3>
@@ -33,4 +34,4 @@ function RaiseFundBox() {
   )
 }
 
-export default RaiseFundBox
+export default UserSetting

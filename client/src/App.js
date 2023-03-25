@@ -40,10 +40,8 @@ function App() {
             <Route path="/volunteerform" element={<VolunteerForm/>} />
             <Route path="/donation" element={<Donation/>} />
             <Route path="/userprofile" element={<UserProfile/>}/>
-            <Route path="/upload" element={<UploadDocs/>}/>
-          
             <Route path="/admin" element={<Admin/>}/>
-            <Route path="/adminnotification" element={<AdminNotification/>}/>
+            
             
 
             <Route path="*" element={<NotFound/>}/>

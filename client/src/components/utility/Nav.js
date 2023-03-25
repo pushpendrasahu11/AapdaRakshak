@@ -10,6 +10,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
 import AdminNotification from '../admin/AdminNotification';
+import AdminProfileIcon from '../admin/AdminProfileIcon';
 
 function Nav() {
 
@@ -72,10 +73,10 @@ function Nav() {
                         aria-label="account of current user"
 
                         aria-haspopup="true"
-
+                        disableRipple
                         color="inherit"
                     >
-                        <AccountCircle />
+                        <AdminProfileIcon></AdminProfileIcon>
                     </IconButton>
 
                 </div>
@@ -87,7 +88,7 @@ function Nav() {
                         size="large"
                         edge="end"
                         aria-label="account of current user"
-
+                        
                         aria-haspopup="true"
 
                         color="inherit"
