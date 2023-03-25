@@ -6,9 +6,12 @@ import Textarea from '@mui/joy/Textarea';
 import Img from '../../assets/sideimages/donateform.avif'
 import Button from '@mui/material/Button';
 import UploadDocs from '../utility/UploadDocs';
-
+import swal from 'sweetalert'
+import axios from 'axios'
+import {  Cookies } from 'react-cookie'
 function RaiseFundForm() {
-
+    const cookie=new Cookies();
+    const [image,setImage] = useState([]);
     const [accNumber,setAccNumber] = useState();
     const [accHolder,setAccHolder] = useState('');
     const [ifsc,setIfsc] = useState('');
@@ -16,8 +19,34 @@ function RaiseFundForm() {
     const [vicName,setVicName] = useState('');
     const [desc,setDesc] = useState('');
 
-    const handleClick = ()=>{
-        
+    const handleClick = async (e)=>{
+        e.preventDefault();
+        try {
+            let token=cookie.get('userid')
+            console.log(image)
+            if(image&&accNumber&&accHolder&&ifsc&&amount&&vicName&&desc){
+                await axios.post('http://localhost:5000/user/createfund',{
+                    supportingdocs:image,accNumber,accHolder,ifsc,amount,vicName,desc,token
+                })
+                 swal({
+                    title:'Successfully created',
+                    icon:'success'
+                })
+                window.location.reload()
+            }
+            else{
+                return swal({
+                    title:'All fields are required',
+                    icon:'error'
+                })
+            }
+        } catch (error) {
+            console.log(error);
+            swal({
+                title:error.response.data.message,
+                icon:'error'
+            })
+        }
     }
 
   return (
@@ -39,7 +68,7 @@ function RaiseFundForm() {
                 </div>
                 <div>
                 <h5>Amount Required (in Rs)</h5>
-                    <input type="number" value={amount} onChange={(e)=>setAmount} className='inputbox' />
+                    <input type="number" value={amount} onChange={(e)=>setAmount(e.target.value)} className='inputbox' />
                 </div>
                 <div>
                     <h5>Name of Victim / Organization</h5>
@@ -61,7 +90,7 @@ function RaiseFundForm() {
                 <div>
                     <h5>Add Supporting Documents</h5>
                     <TextField size='small' id="outlined-basic" label="" variant="outlined" />
-                    <UploadDocs></UploadDocs>
+                    <UploadDocs setImage={setImage} image={image}></UploadDocs>
                 </div>
                 <div>
                 <h5></h5>

@@ -16,6 +16,7 @@ const { checkuserroute } = require('./user/routes/checkuser.route');
 const { adminalertroute } = require('./admin/routes/adminalert.route');
 const { fundroute } = require('./admin/routes/fund.route');
 const { donateroute } = require('./user/routes/donate.route');
+const { volunteerroute } = require('./user/routes/volunteer.route');
 const app=express();
 
 app.use(cors({
@@ -34,7 +35,7 @@ app.use('/user',googleuserroute)
 app.use('/user',checkuserroute)
 app.use('/user',adminalertroute)
 app.use('/user',fundroute)
-
+app.use('/user',volunteerroute)
 app.use('/user',donateroute)
 //Middleware for Error 
 app.use(errorMiddleware);

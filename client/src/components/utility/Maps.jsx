@@ -1,5 +1,5 @@
 import React from 'react'
-import Page1 from "../../assets/fire.webp";
+import Page1 from "../../assets/burger1.jpg";
 import '../../styles/maps.scss'
 
 const Maps = () => {

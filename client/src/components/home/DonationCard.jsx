@@ -1,7 +1,7 @@
 import React from 'react'
 import {motion} from "framer-motion"
 
-const DonationCard = ({itemNum,burgerSrc,price,title,handler,delay=0}) => {
+const DonationCard = ({itemNum,imagesrc,price,title,handler,delay=0}) => {
   return (
     <motion.div
     className="menuCard"
@@ -19,7 +19,7 @@ const DonationCard = ({itemNum,burgerSrc,price,title,handler,delay=0}) => {
     >
         <div>Item {itemNum}</div>
         <main>
-            <img src={burgerSrc} alt={itemNum}></img>
+            <img src={imagesrc} alt={itemNum}></img>
             <p>{title}</p>
             <button style={{width:"22vh"}}>Donate Now</button>
         </main>
