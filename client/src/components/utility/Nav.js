@@ -9,6 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
+import AdminNotification from '../admin/AdminNotification';
 
 function Nav() {
 
@@ -58,9 +59,11 @@ function Nav() {
                         size="large"
                         aria-label="show 17 new notifications"
                         color="inherit"
+                        disableRipple
                     >
                         <Badge badgeContent={17} color="error">
-                            <NotificationsIcon />
+                           
+                            <AdminNotification></AdminNotification>
                         </Badge>
                     </IconButton>
                     <IconButton
@@ -103,7 +106,7 @@ function Nav() {
                         <MenuItem onClick={(e)=>handleNav('/')}><p>Home</p></MenuItem>
                         <MenuItem onClick={(e)=>handleNav('/maps')}><p>Maps</p></MenuItem>
                         <MenuItem onClick={(e)=>handleNav('/donation')}><p>Donation</p></MenuItem>
-                        <MenuItem onClick={(e)=>handleNav('/volunteerform')}><p>Contact</p></MenuItem>
+                        <MenuItem onClick={(e)=>handleNav('/volunteerform')}><p>Volunteer</p></MenuItem>
                         <MenuItem>
                             <IconButton
                                 size="large"
