@@ -40,7 +40,16 @@ const adminalertschema=new Schema({
     userid:{
         type:String,
         required:true
+    },
+    cordinate:{
+        x:{
+            type:Number
+        },
+        y:{
+            type:Number
+        }
     }
+
 })
 
 const adminalertmodel=model('adminalertmodel',adminalertschema)
