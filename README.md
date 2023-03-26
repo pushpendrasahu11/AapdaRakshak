@@ -1,4 +1,4 @@
-<h1 align="center">Hack36 Template Readme</h1>
+<h1 align="center">Hack36 6.0</h1>
 <p align="center">
 </p>
 
@@ -12,7 +12,7 @@
   <a href="https://youtu.be/dQw4w9WgXcQ">https://youtu.be/dQw4w9WgXcQ</a>
   
 ## Presentation Link:
-  <a href="https://cutt.ly/Hack36_23_ppt"> PPT link here </a>
+  <a href="https://docs.google.com/presentation/d/1DhXoCTyFi9ijChqD315qpYEejo26haBR/edit?usp=sharing&ouid=105498289897170181603&rtpof=true&sd=true"> PPT link here </a>
   
   
 ## Table of Contents:
