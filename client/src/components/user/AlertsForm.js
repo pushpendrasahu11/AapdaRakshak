@@ -9,7 +9,7 @@ import UploadDocs from '../utility/UploadDocs';
 import axios from 'axios'
 import swal from 'sweetalert'
 import {  Cookies } from 'react-cookie'
-var URL='http://localhost:5000/user/createadminalert'
+var URL='http://localhost:5000/admin/createadminalert'
 function AlertsForm() {
     const cookie=new Cookies();
     const [image,setImage] = useState([]);

@@ -9,22 +9,20 @@ function UserSetting() {
 
   <div className='main-box'>
     
-    {
+    
 
       <div className='box-child'>
       <div className='left-child'>
-        <h3>Title of the disaster</h3>
-        <h3>Type</h3>
-        <h3>Location</h3>
+      <h3 style={{margin:'2rem 0px'}}>Change password</h3>
+        <div style={{display:'flex',gap:'1rem',alignItems:'center'}}><h4 style={{flex:1}}>Current password</h4> <input style={{flex:1}} type="text" />  </div>
+        <div style={{display:'flex',gap:'1rem',alignItems:'center',margin:'1rem 0'}}><h4 style={{flex:1}}>New password</h4> <input style={{flex:1}} type="text" />  </div>
+        <div style={{display:'flex',gap:'1rem',alignItems:'center'}}><h4 style={{flex:1}}>Confirm new password</h4> <input style={{flex:1}} type="text" />  </div>
+        
+       
       </div>
-      <div className='right-child'>
-        <h3>username</h3>
-        <h3>Email@gmail.com</h3>
-        <h3>phonenumber</h3>
 
-      </div>
     </div>
-    }
+    
     
     
     

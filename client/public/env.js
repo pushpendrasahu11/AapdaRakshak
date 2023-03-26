@@ -5,5 +5,7 @@ window.env = {
   "storageBucket": "wehelp-cb7b9.appspot.com",
   "messagingSenderId": "762524326162",
   "appId": "1:762524326162:web:8370edee065eb3fcfbfbcb",
-  "measurementId": "G-MLKCZWV9QB"
+  "measurementId": "G-MLKCZWV9QB",
+  "presetKey": "wgc4hc4f",
+  "cloudName": "dmvoptyem"
 };

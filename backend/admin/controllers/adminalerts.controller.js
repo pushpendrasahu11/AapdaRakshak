@@ -1,4 +1,8 @@
 const {adminalertmodel}=require('../../models/adminalert.model')
+const {emailmodel}=require('../../models/email.model')
+const {phonenomodel}=require('../../models/phoneno.model')
+const {sendemail}=require('../../user/helper/mailsender')
+const {sendsms}=require('../helper/sendsms')
 async function adminalertcontroller(req,res){
     try {
         req.body.status='pending'
@@ -44,5 +48,48 @@ async function adminalertcontroller(req,res){
         })
     }
 }
-
-module.exports={adminalertcontroller}
+async function getalerts(req,res){
+    try {
+        const result=await adminalertmodel.find({status:'pending'})
+        console.log(result);
+        return res.status(200).json({
+            data:result,
+            flag:true
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message:error.message,
+            flag:false
+        })
+    }
+}
+async function postalertrescont(req,res){
+    try {
+        const {id,response}=req.body;
+        console.log(req.body)
+        const result=await adminalertmodel.findOneAndUpdate({_id:id},{status:response})
+        if(response==='success'){
+            const res=await emailmodel.find()
+            const result2=await phonenomodel.find()
+            for(let i=0;i<res.length;i++){
+                sendemail({otp:false,email:res[i].email,subject:'Alert from AapdaRakshak',alertcontent:result.description})
+            }
+            var array=[]
+            for(let i=0;i<result2.length;i++){
+                array.push(result2[i].mobileno)
+            }
+            sendsms(array,result)
+        }
+        console.log(result);
+        return res.status(200).json({
+            message:'Updated Successfully',
+            flag:true
+        })
+    } catch (error) {
+        return res.status(500).json({
+            message:error.message,
+            flag:false
+        })
+    }
+}
+module.exports={adminalertcontroller,getalerts,postalertrescont}

@@ -43,6 +43,10 @@ const fundschema=new Schema({
     status:{
         type:String
     }
+    ,currentamount:{
+        type:Number,
+        default:0
+    }
 
 })
 

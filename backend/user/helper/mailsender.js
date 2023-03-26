@@ -16,12 +16,12 @@ function sendemail(content){
     mailoption.to=email
     if(otp){
         mailoption.subject=subject
-        mailoption.html=`<div><h1>Hello User</h1><br/><h3 style="color:black">Welcome to AptaGuard.You otp to register for AptaGuard is <b style="color:darkblue">${otp_value}</b></h3>
+        mailoption.html=`<div><h1>Hello User</h1><br/><h3 style="color:black">Welcome to AapdaRakshak.You otp to register for AptaGuard is <b style="color:darkblue">${otp_value}</b></h3>
         </div>`
     }
     else{
         mailoption.subject=subject
-        mailoption.html=`<div><h3 style="color:black">Welcome to AptaGuard.<h2 style="color:darkblue"></h2></h3>
+        mailoption.html=`<div><h1 style="color:black">Alert from AapdaRakshak.</h1><h2 style="color:darkblue">This is alert about ${alertcontent} </h2>
         </div>`
     }
     transport.sendMail(mailoption,(err,info)=>{
@@ -35,8 +35,5 @@ function sendemail(content){
 }
 var mailoption={
         from:'noreply@gmail.com',
-        // to:'',
-        // subject,
-        // text
 }
 module.exports={sendemail};
