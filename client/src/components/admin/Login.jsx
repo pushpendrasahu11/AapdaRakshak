@@ -1,36 +1,9 @@
-import React,{useState} from 'react'
+import React from 'react'
 import {motion} from "framer-motion";
 import '../../styles/login.scss'
-import axios from 'axios';
-import swal from 'sweetalert'
-import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
+
 const Login= () => {
-  const [cookies, setCookie] = useCookies([]);
-  const [email,setEmail]=useState('')
-  const [password,SetPassword]=useState('')
-  const navigate=useNavigate();
-  const handlesubmit=async (e)=>{
-    e.preventDefault()
-    try {
-      const result=await axios.post('http://localhost:5000/admin/login',{
-        email,password
-      })
-      if(result.data.flag===true){
-        setCookie('token',result.data.token,{path:'/',maxAge:10000000})
-        swal({
-          title:'Successfully logged in',
-          icon:'success'
-        })
-        return navigate('/')
-      }
-    } catch (error) {
-      swal({
-        title:error.response.data.message,
-        icon:'error'
-      })
-    }
-  }
+
   const options ={
     initial:{
       x:"-100%",
@@ -51,9 +24,13 @@ const Login= () => {
             delay:.2
           }}
         style={{fontSize:"25px"}}>Login here</motion.p>
-        <input type="text" placeholder="Email"  required value={email} onChange={(e)=>setEmail(e.target.value)}/>
-        <input type="password" placeholder="Password" required onChange={(e)=>SetPassword(e.target.value)}/>
-        <button onClick={handlesubmit}>Submit</button>
+        <input type="text" placeholder="Email" />
+        <input type="password" placeholder="Password" />
+        <span style={{display:"flex", justifyContent:"start",alignItems:"center"}}><input type="checkbox"/>Remember me  <a style={{marginLeft:"60px"}} href="#">Forgot password</a></span>
+        <input type="submit" value="Log In" />
+          {/* <div class="links">
+        <p>Don't have an account?</p> <a href="/signup">Create an account</a>
+          </div> */}
         </form>
       </div>
       <div className="login-right">

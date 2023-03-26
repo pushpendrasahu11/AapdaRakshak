@@ -8,8 +8,10 @@ import '../../styles/donation.scss'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import swal from 'sweetalert'
+import {  Cookies } from 'react-cookie'
 const Donation = () => {
-  const addToCartHandler = (itemNum) => {};
+  const cookie=new Cookies();
+  // const addToCartHandler = (itemNum) => {};
   const [data,setData]=useState([]);
   const [supporting,setsupporting]=useState()
   const [des,setdes]=useState()
@@ -22,8 +24,13 @@ const Donation = () => {
   useEffect(() => {
    const callfirst=async ()=>{
     try {
-      var result= await axios.get('http://localhost:5000/user/getdonate')
-      setData([...result.data.data])
+      let token=cookie.get('userid')
+      var result= await axios.post('http://localhost:5000/user/getdonate',{
+          token
+      })
+      // setData([...result.data.data])
+      setData(result.data.data)
+      console.log(result.data.data)
       result=result.data.data;
       let len=result.length
       var arr=[]
@@ -42,11 +49,12 @@ const Donation = () => {
       setid(arr4)
       setvicname(arr3)
       setsupporting(arr)
+      console.log(data);
       return result
     } catch (error) {
       console.log(error);
       return swal({
-        title:'Something went wrong',
+        title:'Something went wrong.Please login first',
         icon:'error'
       })
     }
@@ -62,26 +70,22 @@ const Donation = () => {
   return (
     <section id="menu">
       <h1>DONATE</h1>
-      <div className="raise"><Fab onClick={handleRaise} style={{padding:"0px 50px", backgroundColor:"rgb(232, 43, 43)"}} variant="extended">
-        
-        Raise Fund
-       </Fab></div>
-      {/* <div>
+      <div>
         {
-          supporting.map((e)=>{
-            <DonationCard
-          itemNum={id[0]}
-          imagesrc={e[0].Url}
-          price={200}
-          title={des[0]}
-          handler={addToCartHandler}
+          data.map((e)=>{
+           return  <DonationCard
+           key={e._id}
+           extraData = {e}
+          itemNum={e._id}
+          imagesrc={e.supportingdocs[0].Url}
+          title={e.desc}
           delay={0.1}
         />
           })
         }
         
       
-      </div> */}
+      </div>
     </section> 
   );
 };

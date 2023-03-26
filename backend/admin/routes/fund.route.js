@@ -8,6 +8,4 @@ fundroute
 .post(validation,fundcontroller)
 
 
-
-
 module.exports={fundroute}
