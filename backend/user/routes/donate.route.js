@@ -4,7 +4,7 @@ const {getdonatecontroller}=require('../controllers/donate.controller')
 const {validation}=require('../helper/checklogin')
 donateroute
 .route('/getdonate')
-.get(getdonatecontroller)
+.post(validation,getdonatecontroller)
 
 
 module.exports={donateroute}

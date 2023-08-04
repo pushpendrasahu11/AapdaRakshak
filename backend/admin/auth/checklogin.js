@@ -5,7 +5,7 @@ const createrrors=require('http-errors')
 
 async function validation(req,res,next){
     try {
-        if( req.body.token){
+        if(req.body.token){
         const {token}=req.body;
         const jwt_key=process.env.jwt_key_admin;
         const {userid}=jwt.verify(token,jwt_key)

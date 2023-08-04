@@ -1,36 +1,45 @@
+import { head } from 'lodash';
 import React, { useState } from 'react'
-
-function UploadDocs() {
-
-    const [selectedFiles,setSelectedFiles] = useState([]);
-
+import axios from 'axios';
+import env from 'react-dotenv'
+function UploadDocs({setImage,image}) {
+    console.log(env.presetKey);
+    const presetKey = "wgc4hc4f";
+    const cloudName = "dmvoptyem";
+    // const [image,setImage] = useState([]);
+   
     const handleChange=(e)=>{
-       
-       setSelectedFiles([]);
+        e.preventDefault();
+        const file = e.target.files[0];
+        const formData =  new FormData();
 
-        if(e.target.files){
-            const filesArray = Array.from(e.target.files).map((file)=>URL.createObjectURL(file));
+        formData.append('file',file);
+        formData.append('upload_preset',presetKey);
+        axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,formData)
+        .then(res => {
+            var arr = [...image];
+            arr.push({name:res.data.original_filename,Url:res.data.secure_url})
+            setImage(arr);
+            console.log(res.data)
+        })
+        .catch(err => console.log(err));
 
-            setSelectedFiles((prevFiles)=>prevFiles.concat(filesArray));
+        console.log(image);
 
-            Array.from(e.target.files).map(
-                (file)=>URL.revokeObjectURL(file)
-            )
-        }
-        console.log(selectedFiles)
     }
 
-    const renderPhotos=(source)=>{
-        return source.map((image) =>{
-            return <img src={image} key={image} style={{width:'100px',height:'100px'}}/>;
-        });
-    }
-
+    
   return (
-    <div className='ud-container'>
-        <input type="file" name='file[]' multiple onChange={handleChange}/>
-        <div className='result'>{renderPhotos(selectedFiles)}</div>
-        {/* <button onClick={handleUpload}>Upload</button> */}
+    <div style={{padding:'20px'}} className='ud-container'>
+        <input type="file" accept="image/png, image/jpeg" name='image'  onChange={handleChange}/>
+        
+        <br />
+        {
+            
+            image!=null?image.map((obj)=>(
+                <div>{obj.name}</div>
+            )):<></>
+        }
     </div>
   )
 }

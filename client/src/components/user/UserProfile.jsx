@@ -1,18 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../styles/userprofile.scss'
 import Avatar from '@mui/material/Avatar';
 import dp from '../../assets/img1.jpg'
-
+import AlertStatus from './AlertStatus';
+import RaiseFundStatus from './RaiseFundStatus';
+import VolunteerStatus from './VolunteerStatus';
+import UserSetting from './UserSetting';
 
 function UserProfile() {
+
+  
+  const [current,setCurrent] = useState('alert');
+
+  useEffect(()=>{
+    handleBack();
+  },[current])
+
+  const handleCurrent = (val) =>{
+    document.getElementById(current).style.background = '#ffffff';
+    setCurrent(val);
+  }
+
+  const handleBack = () => {
+    document.getElementById(current).style.background = '#e0e0e0';
+  }
+
+  
   return (
     <div className='user-container'>
       <div className='user-left'>
         
-          <li>Sent Alert Status</li>
-          <li>Raise Fund Status</li>
-          <li>Volunteer Application Status</li>
-          <li>Settings</li>
+          <li id='alert' onClick={(e)=>handleCurrent('alert')}>Sent Alert Status</li>
+          <li id='raise' onClick={(e)=>handleCurrent('raise')}>Raise Fund Status</li>
+          <li id='volunteer' onClick={(e)=>handleCurrent('volunteer')}>Volunteer Application Status</li>
+          <li id='settings' onClick={(e)=>handleCurrent('settings')}>Settings</li>
         
       </div>
       <div className='user-right'>
@@ -25,11 +46,20 @@ function UserProfile() {
       <h2>User</h2>
       
             </div>
-            <div className='admin-box'>
-              <div className='top-bar'>
-              <h5 style={{fontSize:'1.2rem',padding:'0.6rem 0 0 1rem',fontWeight:'400'}}>Review Alert Requests</h5>
-            </div>
-            </div>
+            {(() => {
+        switch (current) {
+          case 'alert':
+            return <AlertStatus></AlertStatus>
+          case 'raise':
+            return <RaiseFundStatus/>
+          case 'volunteer':
+            return <VolunteerStatus />
+          case 'settings':
+          return <UserSetting/>
+          default:
+            return <AlertStatus></AlertStatus>
+        }
+      })()}
       </div>
     </div>
   )

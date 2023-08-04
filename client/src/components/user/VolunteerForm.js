@@ -5,17 +5,44 @@ import Textarea from '@mui/joy/Textarea';
 import Img from '../../assets/sideimages/volunteerform.jpg'
 import Button from '@mui/material/Button';
 import UploadDocs from '../utility/UploadDocs';
-
+import swal from 'sweetalert'
+import {  Cookies } from 'react-cookie'
+import axios from 'axios'
+var URL='http://localhost:5000/user/volunteer'
 function VolunteerForm() {
-  
+    const cookie=new Cookies();
+    const [image,setImage] = useState([]);
     const [name,setName] = useState('');
     const [number,setNumber] = useState('');
     const [type,setType] = useState('');
     const [location,setLocation] = useState('');
     const [desc,setDesc] = useState('');
 
-    const handleClick = ()=>{
-        
+    const handleClick = async (e)=>{
+        e.preventDefault();
+        try {
+            let token=cookie.get('userid')
+            if(image.length!==0&&name&&number&&type&&location&&desc){
+                await axios.post(URL,{
+                    image,name,number,type,location,desc,token
+                })
+                return swal({
+                    title:'Volunteer under review by admin',
+                    icon:'Success'
+                })
+            }
+            else{
+                return swal({
+                    title:'All fields are required',
+                    icon:'error'
+                })
+            }
+        } catch (error) {
+            return swal({
+                title:error.response.data.message,
+                icon:'error'
+            })
+        }
     }
 
     return (
@@ -56,7 +83,7 @@ function VolunteerForm() {
                 <div>
                     <h5>Add Supporting Documents</h5>
                     <TextField size='small' id="outlined-basic" label="" variant="outlined" />
-                    <UploadDocs></UploadDocs>
+                    <UploadDocs setImage={setImage} image={image}></UploadDocs>
                 </div>
                 <div>
                 <h5></h5>

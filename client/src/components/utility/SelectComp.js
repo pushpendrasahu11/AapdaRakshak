@@ -4,8 +4,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function SelectComp() {
-  const [type, setType] = React.useState('');
+export default function SelectComp({type,setType}) {
+  // const [type, setType] = React.useState('');
 
   const handleChange = (event) => {
     setType(event.target.value);
@@ -25,11 +25,11 @@ export default function SelectComp() {
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value={10}>Flood</MenuItem>
-          <MenuItem value={21}>Earthquake</MenuItem>
-          <MenuItem value={22}>Medical</MenuItem>
-          <MenuItem value={22}>Cyclone</MenuItem>
-          <MenuItem value={22}>Others</MenuItem>
+          <MenuItem value={"Flood"}>Flood</MenuItem>
+          <MenuItem value={"Earthquake"}>Earthquake</MenuItem>
+          <MenuItem value={"Medical"}>Medical</MenuItem>
+          <MenuItem value={"Cyclone"}>Cyclone</MenuItem>
+          <MenuItem value={"Others"}>Others</MenuItem>
         </Select>
       </FormControl>
     </div>

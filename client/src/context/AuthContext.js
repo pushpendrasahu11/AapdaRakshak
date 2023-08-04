@@ -8,6 +8,18 @@ export function AuthProvider({children}){
     const [user, setUser] = useState();
     const [loading, setLoading] = useState();
 
+    function signup(email,password){
+        return createUserWithEmailAndPassword(auth, email,password);
+    }
+
+    function login(email,password){
+        return signInWithEmailAndPassword(auth, email,password);
+    }
+
+    function logout(){
+        return signOut(auth);
+    }
+
     function googlesignin(){
         const googleAuthProvider = new GoogleAuthProvider();
         return signInWithPopup(auth,googleAuthProvider);
@@ -27,7 +39,9 @@ export function AuthProvider({children}){
 
     const store={ 
         user,
-        
+        signup,
+        login,
+        logout,
         googlesignin
     }
  

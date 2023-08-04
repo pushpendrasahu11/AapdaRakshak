@@ -2,18 +2,10 @@ const {fundmodel}=require('../../models/fund.model')
 
 async function getdonatecontroller(req,res){
     try {
-        const result=await fundmodel.find();
-        let len=result.length;
-        let response=[]
-        for(let i=0;i<len;i++){
-            if(result[i].status==='success'){
-                const {desc,vicName,supportingdocs,_id}=result[i];
-                response.push({desc,vicName,supportingdocs,_id})
-            }
-        }
-        console.log(result)
+        const result=await fundmodel.find({status:'success'});
+        // console.log(result)/
         return res.status(200).json({
-            data:response,
+            data:result,
             message:'suuccessfully returned',
             flag:true
         })

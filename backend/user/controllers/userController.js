@@ -108,3 +108,75 @@ exports.createEvent=catchAsyncErrors(async(req,res,next)=>{
     })
 
 });
+
+exports.forgetPassword= catchAsyncErrors(async(req,res,next)=>{
+    
+    const user=await User.findOne({email:req.body.email});
+    
+    if(!user){
+        return next(new ErrorHander("User not found",404));
+    }
+
+    const resetToken= user.getResetPasswordToken();
+    await user.save({validateBeforeSave:false});
+    const resetPasswordUrl=`http://localhost:3000/user/password/reset/${resetToken}`; 
+
+    const message=`Your password reset token is :- \n\n ${resetPasswordUrl} \n\n If you have not requested this email then, please ignore it`;
+
+    try {
+        await sendEmail({
+            // email:"pkg180901gmail.com",
+            email:user.email,
+            subject:`apda Password Recovery`,
+            message,
+        });
+        
+        res.status(200).json({
+            success:true,
+            message:`Email sent to ${user.email} successfully`,
+        })
+    } catch (error) {
+        user.resetPasswordToken=undefined;
+        user.resetPasswordExpire=undefined;
+        await user.save({validateBeforeSave:false});
+        
+        return next(new ErrorHander(error.message,500));
+    }
+});
+
+
+
+// reset password
+exports.resetPassword=catchAsyncErrors(async(req,res,next)=>{
+
+    //creating token hash
+    const resetPasswordToken=crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex"); 
+
+    
+    const user =await User.findOne({
+        resetPasswordToken,
+        resetPasswordExpire:{$gt: Date.now()},
+    }); 
+ 
+    if(!user){
+        return next(new ErrorHander("Reset Password Token is invalide or has been expired", 400));
+    }
+
+    if(req.body.password!== req.body.confirmPassword){ 
+        return next(new ErrorHander("Password does not Match",400));
+    }
+ 
+    user.password=req.body.password;  
+    user.resetPasswordToken=undefined;
+    user.resetPasswordExpire=undefined;
+
+    await user.save();
+    
+    res.status(201).json({
+        success:true,
+        message:"password reset successfully"
+    })
+})

@@ -9,12 +9,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
-import AdminNotification from '../admin/AdminNotification';
-import AdminProfileIcon from '../admin/AdminProfileIcon';
 
 function Nav() {
 
     const navigate = useNavigate();
+    // const [newnavigate,s]
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -31,8 +30,8 @@ function Nav() {
         
     };
 
-    const handleMenuOpen = () => {
-
+    const newnavigate = () => {
+        navigate('/admin')
     }
 
     return (
@@ -51,6 +50,7 @@ function Nav() {
                         <li><a href="/maps">Maps</a></li>
                         <li><a href="/donation">Donation</a></li>
                         <li><a href="/volunteerform">Volunteer</a></li>
+                        <li><a href="/raisefund">Raise Fund</a></li>
                     </ul>
                 </div>
                 <div className="nav-right">
@@ -60,23 +60,21 @@ function Nav() {
                         size="large"
                         aria-label="show 17 new notifications"
                         color="inherit"
-                        disableRipple
                     >
                         <Badge badgeContent={17} color="error">
-                           
-                            <AdminNotification></AdminNotification>
+                            <NotificationsIcon />
                         </Badge>
                     </IconButton>
                     <IconButton
                         size="large"
                         edge="end"
                         aria-label="account of current user"
-
+                        onClick={newnavigate}
                         aria-haspopup="true"
-                        disableRipple
+
                         color="inherit"
                     >
-                        <AdminProfileIcon></AdminProfileIcon>
+                        <AccountCircle />
                     </IconButton>
 
                 </div>
@@ -88,7 +86,7 @@ function Nav() {
                         size="large"
                         edge="end"
                         aria-label="account of current user"
-                        
+
                         aria-haspopup="true"
 
                         color="inherit"
@@ -108,6 +106,7 @@ function Nav() {
                         <MenuItem onClick={(e)=>handleNav('/maps')}><p>Maps</p></MenuItem>
                         <MenuItem onClick={(e)=>handleNav('/donation')}><p>Donation</p></MenuItem>
                         <MenuItem onClick={(e)=>handleNav('/volunteerform')}><p>Volunteer</p></MenuItem>
+                        <MenuItem onClick={(e)=>handleNav('/raisefund')}><p>Raise Fund</p></MenuItem>
                         <MenuItem>
                             <IconButton
                                 size="large"

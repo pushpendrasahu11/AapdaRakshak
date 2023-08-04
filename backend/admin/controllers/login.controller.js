@@ -7,7 +7,7 @@ const {validate_schema}=require('../helper/validate.schema')
 async function loginadmin(req,res){
     try {
         const {email,password}=req.body; 
-        // console.log(req.body);
+        console.log(req.body);
         const checkvaldiation=await validate_schema.validateAsync({email,password});
         const data=await adminmodel.findOne({email});
         if(data){

@@ -6,18 +6,42 @@ import Textarea from '@mui/joy/Textarea';
 import Img from '../../assets/sideimages/sunami.jpg'
 import Button from '@mui/material/Button';
 import UploadDocs from '../utility/UploadDocs';
-
+import axios from 'axios'
+import swal from 'sweetalert'
+import {  Cookies } from 'react-cookie'
+var URL='http://localhost:5000/admin/createadminalert'
 function AlertsForm() {
-
-    const [subject,setSubject] = useState('');
+    const cookie=new Cookies();
+    const [image,setImage] = useState([]);
+    const [title,setTitle] = useState('');
     const [type,setType] = useState('');
     const [location,setLocation] = useState('');
     const [area,setArea] = useState('');
     const [desc,setDesc] = useState('');
 
-    const handleClick = ()=>{
-        console.log(type);
-        console.log(subject);
+    const handleClick = async ()=>{
+        try {
+            let token=cookie.get('userid')
+            console.log(image,title,type,location,area,desc)
+            if(!image.length||!title||!type||!location||!area||!desc){
+                return swal({
+                    title:'All fields are required',
+                    icon:'info'
+                })
+            }
+            await axios.post(URL,{
+                title,disastertype:type,location,area,description:desc,supportingdocs:image,token
+            })
+            return swal({
+                title:'Successfully submitted',
+                icon:'success'
+            })
+        } catch (error) {
+            swal({
+                title:error.response.data.message,
+                icon:'error'
+            })
+        }
     }
 
     return (
@@ -27,20 +51,20 @@ function AlertsForm() {
             <div className='formbox'>
                 <h2>Please Fill the Alert Information</h2>
                 <div>
-                    <h5>Subject</h5>
-                    <TextField size='small' id="outlined-basic" value={subject} onChange={(e)=>setSubject(e.target.value)} label="" variant="outlined" />
+                    <h5>Title</h5>
+                    <TextField size='small' id="outlined-basic"  value={title} onChange={(e)=>setTitle(e.target.value)} label="" variant="outlined" />
                 </div>
                 <div>
                     <h5>Type of Disaster</h5>
-                    <SelectComp value={type} onChange={(e)=>setType(e.target.value)} id="outlined-basic"></SelectComp>
+                    <SelectComp type={type} setType={setType}  id="outlined-basic"></SelectComp>
                 </div>
                 <div>
                     <h5>Location (center point) </h5>
-                    <TextField size='small' id="outlined-basic" value={location} onChange={(e)=>setLocation(e.target.value)} label="" variant="outlined" />
+                    <TextField size='small' id="outlined-basic"  value={location} onChange={(e)=>setLocation(e.target.value)} label="" variant="outlined" />
                 </div>
                 <div>
                     <h5>Area Radius (in kilometers)</h5>
-                    <TextField size='small' id="outlined-basic" value={area} onChange={(e)=>setArea(e.target.value)} label="" variant="outlined" required />
+                    <TextField size='small' id="outlined-basic"  value={area} onChange={(e)=>setArea(e.target.value)} label="" variant="outlined" required />
                 </div>
                 <div>
                     <h5>Description</h5>
@@ -57,8 +81,8 @@ function AlertsForm() {
                 </div>
                 <div>
                     <h5>Add Supporting Documents</h5>
-                    <TextField size='small' id="outlined-basic" label="" variant="outlined" />
-                    <UploadDocs></UploadDocs>
+                    <TextField   size='small' id="outlined-basic" label="" variant="outlined" />
+                    <UploadDocs setImage={setImage} image={image}></UploadDocs>
                 </div>
                 <div>
                 <h5></h5>
